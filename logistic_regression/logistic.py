@@ -18,7 +18,8 @@ def make_batch_cost(batch_size):
         index_sample = np.array(sample(range(len_X),batch_size))
         sub_X = X[index_sample]
         sub_y = y[index_sample]
-        return np.sum(np.square(sub_y - sigmoid(sub_X.dot(theta))))
+        scale = len_X / sub_X.shape[0]
+        return scale*np.sum(np.square(sub_y - sigmoid(sub_X.dot(theta))))
     return batch_cost
 
 cost = full_cost
