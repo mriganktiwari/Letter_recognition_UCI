@@ -29,15 +29,6 @@ cost = full_cost
 ##    out = np.transpose((1./m)*np.transpose(sigmoid(X.dot(theta)) - y).dot(X))
 ##    return out
 
-##def basis(m,n):
-##    out = []
-##    for i in range(m):
-##        for j in range(n):
-##            temp = np.array([[0]*n]*m)
-##            temp[i][j] = 1
-##            out.append(temp)
-##    return out
-
 def basis(m,n):
     out = []
     for i in range(m):
@@ -76,7 +67,7 @@ def grad_desc(X,y,alpha = 0.1,method = 'iter',param = 10,cost = None):
     if(method == 'iter'):
         n = 0
     while(running):
-        theta = theta - alpha*grad(theta,X,y)
+        theta = theta - alpha*grad(theta,X,y,cost = cost)
         if(method == 'iter'):
             n += 1
             if(n > param):
@@ -97,5 +88,6 @@ def predict(theta,X):
 train_X = np.matrix([[1,0,0],[1,1,0],[1,0,1],[1,1,1]])
 train_y = np.matrix([[0,1,1,1]]).T
 def testing():
-    train_theta = grad_desc(train_X,train_y,param = 100)
+    batch = make_batch_cost(batch_size = 2)
+    train_theta = grad_desc(train_X,train_y,param = 100,cost = batch)
     return train_theta
